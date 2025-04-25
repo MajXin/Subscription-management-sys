@@ -10,6 +10,8 @@ import arcjetMiddleware from './controllers/arcjet.controller.js';
 
 const app = express();
 
+app.use(arcjetMiddleware);
+
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
@@ -18,7 +20,6 @@ app.use('/api/v1/users', userRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/subscriptions', subscriptionsRouter);
 app.use(errorMiddleware);
-app.use(arcjetMiddleware);
 
 app.get('/', async (req, res)=> {
     res.send('Welcome to Subscription tracker API');
