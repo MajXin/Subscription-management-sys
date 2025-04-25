@@ -71,5 +71,13 @@ export const signIn = async(req, res, next) => {
 }
 
 export const signOut = async(req, res, next) => {
-
+    //remove or invalidate the token on the client side
+    try{
+        res.status(200).json({
+            success: true,
+            message: 'User logged out',
+        });
+    }catch(error){
+        next(error);
+    }
 }
