@@ -4,6 +4,16 @@ import jwt from "jsonwebtoken"
 import { JWT_EXPIRES_IN, JWT_SECRET } from "../config/env.js";
 import User from "../models/user.models.js";
 
+/**
+ * @desc    Register a new user with authentication
+ * @route   POST /api/auth/signup
+ * @access  Public
+ * @returns {Object} User object with authentication token
+ * 
+ * This function handles user registration with immediate authentication.
+ * It creates a new user account and returns a JWT token for immediate login.
+ * Uses MongoDB transaction to ensure data consistency.
+ */
 export const signUp = async(req, res, next) => {
     const session = await mongoose.startSession();
     session.startTransaction();
@@ -38,6 +48,15 @@ export const signUp = async(req, res, next) => {
     }
 }
 
+/**
+ * @desc    Authenticate existing user and get token
+ * @route   POST /api/auth/signin
+ * @access  Public
+ * @returns {Object} User object with authentication token
+ * 
+ * This function verifies user credentials and generates a JWT token
+ * for authenticated API access.
+ */
 export const signIn = async(req, res, next) => {
     try{
      const {email, password} = req.body;
@@ -70,6 +89,15 @@ export const signIn = async(req, res, next) => {
     }
 }
 
+/**
+ * @desc    Log out user / clear cookie
+ * @route   POST /api/auth/signout
+ * @access  Private
+ * @returns {Object} Success message
+ * 
+ * This function handles user logout. Note that token invalidation
+ * happens on the client side as JWTs are stateless.
+ */
 export const signOut = async(req, res, next) => {
     //remove or invalidate the token on the client side
     try{
